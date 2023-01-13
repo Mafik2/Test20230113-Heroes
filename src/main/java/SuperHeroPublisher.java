@@ -27,7 +27,6 @@ public class SuperHeroPublisher {
         }
     }
 
-
     public ArrayList<Hero> heroes() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost/superhero?user=root&password=");
