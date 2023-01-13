@@ -12,12 +12,14 @@ public class SuperHeroPublisher {
             Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost/superhero?user=root&password=");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("""
-                    select p.publisher_name
-                    from publisher as p;  
+                    select p.publisher_name, count(s.id)
+                    from publisher as p
+                        join superhero as s on(p.id = s.publisher_id) 
+                    group by p.id;
                       """);
             ArrayList<String> getpublisher = new ArrayList<>();
             while (resultSet.next()) {
-                getpublisher.add(resultSet.getString(1));
+                getpublisher.add(resultSet.getString(1) + "(" + resultSet.getInt(2) + ")");
             }
             return getpublisher;
         } catch (SQLException e) {
